@@ -28,8 +28,9 @@ namespace Database {
                 }
 
                 // Read
-                var tasks = context.Tasks.Select(t => $"Name: {t.Name}, Deadline: {t.Deadline}, Completed: {t.Completed}");
-                foreach (var item in tasks)
+                var date = new DateTime(2024, 1, 1);
+                var tasks2 = context.Tasks.Where(t => t.Deadline > date).Select(t => $"Name: {t.Name}, Deadline: {t.Deadline}, Completed: {t.Completed}");
+                foreach (var item in tasks2)
                 {
                     Console.WriteLine(item);
                 }
