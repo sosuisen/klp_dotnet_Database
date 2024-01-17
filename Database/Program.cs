@@ -1,4 +1,7 @@
-namespace Database {
+using Microsoft.EntityFrameworkCore.Storage;
+
+namespace Database
+{
     internal class Program
     {
         static void Main(string[] args)
@@ -13,7 +16,7 @@ namespace Database {
                 context.SaveChanges();
 
                 // Update
-                var taskToUpdate = context.Tasks.FirstOrDefault(t => t.Name == "Buy PC");
+                var taskToUpdate = context.Tasks.FirstOrDefault(t => t.Name == "Buy chocolate");
                 if (taskToUpdate != null)
                 {
                     taskToUpdate.Deadline = new DateTime(2024, 1, 1);
@@ -21,10 +24,12 @@ namespace Database {
                 }
 
                 // Delete
-                var taskToDelete = context.Tasks.Where(t => t.Deadline < new DateTime(2024, 1, 15)).Select(t => t); 
+                var date = new DateTime(2024, 1, 15);
+                var taskToDelete = context.Tasks.Where(t => t.Deadline < date).Select(t => t);
                 if (taskToDelete != null)
                 {
-                    foreach (var task in taskToDelete) {
+                    foreach (var task in taskToDelete)
+                    {
                         context.Tasks.Remove(task);
                     }
                     context.SaveChanges();
