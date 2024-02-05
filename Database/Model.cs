@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Database
 {
-    public class TaskContext : DbContext
+    public class ToDoContext : DbContext
     {
         public DbSet<ToDo> ToDos { get; set; }
 
