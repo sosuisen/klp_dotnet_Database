@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Database
 {
     internal class Program
@@ -14,24 +16,12 @@ namespace Database
                 context.SaveChanges();
 
                 // Update
-                var taskToUpdate = context.ToDos.FirstOrDefault(t => t.Name == "Buy chocolate");
-                if (taskToUpdate != null)
-                {
-                    taskToUpdate.Deadline = new DateTime(2024, 1, 1);
-                    context.SaveChanges();
-                }
+                context.ToDos.Where(t => t.Name == "Buy chocolate")
+                   .ExecuteUpdate(setters => setters.SetProperty(t => t.Deadline, new DateTime(2024, 1, 1)));
 
                 // Delete
                 var date = new DateTime(2024, 1, 15);
-                var taskToDelete = context.ToDos.Where(t => t.Deadline < date).Select(t => t);
-                if (taskToDelete != null)
-                {
-                    foreach (var task in taskToDelete)
-                    {
-                        context.ToDos.Remove(task);
-                    }
-                    context.SaveChanges();
-                }
+                context.ToDos.Where(t => t.Deadline < date).Select(t => t).ExecuteDelete();
 
                 // Read
                 var tasks = context.ToDos.Where(t => t.Completed == false).Select(t => $"Name: {t.Name}, Deadline: {t.Deadline}, Completed: {t.Completed}");
