@@ -4,7 +4,7 @@ namespace Database
     {
         static void Main(string[] args)
         {
-            using (var context = new Database.TaskContext())
+            using (var context = new TaskContext())
             {
                 // Create
                 context.ToDos.Add(new ToDo("Buy milk", DateTime.Now));
@@ -14,7 +14,8 @@ namespace Database
 
                 // Read
                 var date = new DateTime(2024, 1, 1);
-                var tasks2 = context.ToDos.Where(t => t.Deadline > date).Select(t => $"Name: {t.Name}, Deadline: {t.Deadline}, Completed: {t.Completed}");
+                var tasks2 = context.ToDos.Where(t => t.Deadline > date)
+                    .Select(t => $"Name: {t.Name}, Deadline: {t.Deadline}, Completed: {t.Completed}");
                 foreach (var item in tasks2)
                 {
                     Console.WriteLine(item);
